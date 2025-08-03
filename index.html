@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>368 KANJI JFTA2 IG:iwan_kurniawan201298 WA:07068005178</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #eef2f7;
+    margin: 0; padding: 30px 15px;
+    display: flex; justify-content: center; min-height: 100vh; align-items: flex-start;
+    color: #333;
+  }
+  .container {
+    background: white;
+    max-width: 720px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 30px 40px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #004d99;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  #progress-bar {
+    height: 12px;
+    background: #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  #progress-fill {
+    height: 100%;
+    width: 0;
+    background: #2a7ae2;
+    transition: width 0.3s ease;
+  }
+  #progress-text {
+    text-align: right;
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .question-number {
+    font-weight: 600;
+    font-size: 16px;
+    color: #2a7ae2;
+    margin-bottom: 5px;
+  }
+  .question {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    color: #222;
+    min-height: 60px;
+  }
+  .answers label {
+    display: block;
+    padding: 12px 18px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 17px;
+    background: #fafafa;
+    user-select: none;
+    box-shadow: inset 0 0 5px #f0f0f0;
+  }
+  .answers input[type="radio"]:checked + label {
+    border-color: #2a7ae2;
+    background: #d0e1ff;
+    box-shadow: 0 0 8px #2a7ae2aa;
+    color: #003d99;
+    font-weight: 700;
+  }
+  .answers label:hover {
+    background: #e4ecff;
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px #4a90e2aa;
+  }
+  .answers input[type="radio"] {
+    display: none;
+  }
+  #next-btn {
+    display: block;
+    width: 100%;
+    background-color: #2a7ae2;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+    box-shadow: 0 5px 12px #1d55b3aa;
+    user-select: none;
+  }
+  #next-btn:hover {
+    background-color: #1857c2;
+    box-shadow: 0 6px 14px #144595cc;
+  }
+  #result {
+    background: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(42, 122, 226, 0.2);
+    padding: 25px 30px;
+    margin-top: 20px;
+    color: #2a2a2a;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  #result h2 {
+    margin-top: 0;
+    color: #2a7ae2;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-align: center;
+    letter-spacing: 0.8px;
+  }
+  #result p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .wrong-item {
+    background: #fff4f4;
+    border-left: 6px solid #e25252;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .wrong-item strong {
+    color: #b00000;
+  }
+  #result button {
+    display: block;
+    margin: 0 auto;
+    background-color: #2a7ae2;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 12px #1d55b3aa;
+    user-select: none;
+  }
+  #result button:hover {
+    background-color: #1857c2;
+    box-shadow: 0 6px 14px #144595cc;
+  }
+  @media(max-width: 480px) {
+    .container {
+      padding: 20px 25px;
+    }
+    .question {
+      font-size: 18px;
+    }
+    .answers label {
+      font-size: 15px;
+      padding: 10px 14px;
+    }
+    #next-btn {
+      font-size: 16px;
+      padding: 13px;
+    }
+    #result p {
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>368 KANJI JFTA2 IG:iwan_kurniawan201298 WA:07068005178</h1>
+    <div id="progress-text"></div>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div id="quiz-container"></div>
+    <button id="next-btn">Soal Berikutnya</button>
+    <div id="result" style="display:none;"></div>
+  </div>
+
+<script>
+  const quizData = [
+    { question: "『季節』の意味はどれですか？", options: ["Hari", "Musim", "Waktu", "Cuaca"], answer: 1 },
+    { question: "『昨日』の意味はどれですか？", options: ["Besok", "Hari Ini", "Minggu Depan", "Kemarin"], answer: 3 },
+    { question: "『明日』の意味はどれですか？", options: ["Kemarin", "Hari Ini", "Besok", "Nanti"], answer: 2 },
+    { question: "『食堂』の意味はどれですか？", options: ["Toko", "Ruang Kelas", "Kantor", "Kantin"], answer: 3 },
+    { question: "『銀行』の意味はどれですか？", options: ["Sekolah", "Toko", "Bank", "Kantor Pos"], answer: 2 },
+    { question: "『受付』の意味はどれですか？", options: ["Dapur", "Pintu Masuk", "Resepsionis", "Gudang"], answer: 2 },
+    { question: "『門』の意味はどれですか？", options: ["Dinding", "Pintu Gerbang", "Jendela", "Lantai"], answer: 1 },
+    { question: "『登ります』の意味はどれですか？", options: ["Membaca", "Mendengarkan", "Memanjat", "Membuka"], answer: 2 },
+    { question: "『教科書』の意味はどれですか？", options: ["Majalah", "Buku Cerita", "Kamus", "Buku Pelajaran"], answer: 3 },
+    { question: "『教室』の意味はどれですか？", options: ["Ruang Tamu", "Kantin", "Ruang Kelas", "Perpustakaan"], answer: 2 },
+    { question: "『参加します』の意味はどれですか？", options: ["Menjual", "Membeli", "Ikut serta", "Membuat"], answer: 2 },
+    { question: "『用意します』の意味はどれですか？", options: ["Membaca", "Mengajar", "Mempersiapkan", "Mendengar"], answer: 2 },
+    { question: "『牛肉』の意味はどれですか？", options: ["Daging Ayam", "Ikan", "Daging Kambing", "Daging Sapi"], answer: 3 },
+    { question: "『豚肉』の意味はどれですか？", options: ["Daging Sapi", "Daging Babi", "Ikan", "Daging Kambing"], answer: 1 },
+    { question: "『皿』の意味はどれですか？", options: ["Pisau", "Sendok", "Piring", "Gelas"], answer: 2 },
+    { question: "『お湯』の意味はどれですか？", options: ["Air Dingin", "Air Panas", "Es Batu", "Teh"], answer: 1 },
+    { question: "『調理方法』の意味はどれですか？", options: ["Peralatan Dapur", "Cara Memasak", "Menu Makanan", "Bahan Makanan"], answer: 1 },
+    { question: "『甘い』の意味はどれですか？", options: ["Manis", "Asin", "Pedas", "Asam"], answer: 0 },
+    { question: "『辛い』の意味はどれですか？", options: ["Pahit", "Pedas", "Asam", "Manis"], answer: 1 },
+    { question: "『数字』の意味はどれですか？", options: ["Warna", "Waktu", "Huruf", "Angka"], answer: 3 },
+    { question: "『机』の意味はどれですか？", options: ["Pintu", "Rak Buku", "Kursi", "Meja"], answer: 3 },
+    { question: "『都合』の意味はどれですか？", options: ["Uang", "Tempat", "Kondisi", "Waktu"], answer: 2 },
+    { question: "『用事』の意味はどれですか？", options: ["Pertemuan", "Tempat", "Keperluan", "Kegiatan"], answer: 2 },
+    { question: "『氏名』の意味はどれですか？", options: ["Nomor Telepon", "Tempat Lahir", "Alamat", "Nama Lengkap"], answer: 3 },
+    { question: "『理由』の意味はどれですか？", options: ["Tujuan", "Alasan", "Cara", "Hasil"], answer: 1 },
+    { question: "『別に』の意味はどれですか？", options: ["Sebaliknya", "Bersama-sama", "Tidak Terutama", "Sengaja"], answer: 2 },
+    { question: "『連絡先』の意味はどれですか？", options: ["Alamat", "Nama", "Pekerjaan", "Kontak"], answer: 3 } ,
+  { question: "『魚』の意味はどれですか？", options: ["Daging", "Ikan", "Telur", "Air"], answer: 1 },
+  { question: "『肉』の意味はどれですか？", options: ["Daging", "Sayur", "Buah", "Nasi"], answer: 0 },
+  { question: "『卵』の意味はどれですか？", options: ["Air", "Ikan", "Telur", "Daging"], answer: 2 },
+  { question: "『水』の意味はどれですか？", options: ["Air", "Es", "Minuman", "Teh"], answer: 0 },
+  { question: "『食べます』の意味はどれですか？", options: ["Makan", "Minum", "Tidur", "Berjalan"], answer: 0 },
+  { question: "『飲みます』の意味はどれですか？", options: ["Makan", "Minum", "Berjalan", "Tidur"], answer: 1 },
+  { question: "『大きい』の意味はどれですか？", options: ["Kecil", "Baru", "Besar", "Tua"], answer: 2 },
+  { question: "『小さい』の意味はどれですか？", options: ["Kecil", "Besar", "Baru", "Tua"], answer: 0 },
+  { question: "『新しい』の意味はどれですか？", options: ["Tua", "Kecil", "Besar", "Baru"], answer: 3 },
+  { question: "『古い』の意味はどれですか？", options: ["Baru", "Tua", "Besar", "Kecil"], answer: 1 },
+  { question: "『～時』の意味はどれですか？", options: ["Menit", "Detik", "Jam", "Hari"], answer: 2 },
+  { question: "『～分』の意味はどれですか？", options: ["Jam", "Menit", "Detik", "Hari"], answer: 1 },
+  { question: "『～半』の意味はどれですか？", options: ["Setengah", "Satu", "Dua", "Tiga"], answer: 0 },
+  { question: "『月曜日』の意味はどれですか？", options: ["Senin", "Selasa", "Rabu", "Kamis"], answer: 0 },
+  { question: "『火曜日』の意味はどれですか？", options: ["Senin", "Selasa", "Rabu", "Kamis"], answer: 1 },
+  { question: "『水曜日』の意味はどれですか？", options: ["Senin", "Selasa", "Rabu", "Kamis"], answer: 2 },
+  { question: "『木曜日』の意味はどれですか？", options: ["Jumat", "Kamis", "Sabtu", "Minggu"], answer: 1 },
+  { question: "『金曜日』の意味はどれですか？", options: ["Jumat", "Sabtu", "Kamis", "Minggu"], answer: 0 },
+  { question: "『土曜日』の意味はどれですか？", options: ["Sabtu", "Jumat", "Minggu", "Kamis"], answer: 0 },
+  { question: "『日曜日』の意味はどれですか？", options: ["Sabtu", "Jumat", "Minggu", "Kamis"], answer: 2 },
+  { question: "『言います』の意味はどれですか？", options: ["Berbicara", "Mendengar", "Melihat", "Menulis"], answer: 0 },
+  { question: "『話します』の意味はどれですか？", options: ["Mendengar", "Berbicara", "Melihat", "Menulis"], answer: 1 },
+  { question: "『読みます』の意味はどれですか？", options: ["Membaca", "Menulis", "Mendengar", "Melihat"], answer: 0 },
+  { question: "『見ます』の意味はどれですか？", options: ["Mendengar", "Melihat", "Menulis", "Membaca"], answer: 1 },
+  { question: "『聞きます』の意味はどれですか？", options: ["Melihat", "Menulis", "Membaca", "Mendengar"], answer: 3 },
+  { question: "『書きます』の意味はどれですか？", options: ["Menulis", "Membaca", "Melihat", "Mendengar"], answer: 0 },
+  { question: "『一』の意味はどれですか？", options: ["Dua", "Tiga", "Satu", "Empat"], answer: 2 },
+  { question: "『二』の意味はどれですか？", options: ["Satu", "Dua", "Tiga", "Empat"], answer: 1 },
+  { question: "『三』の意味はどれですか？", options: ["Tiga", "Dua", "Satu", "Empat"], answer: 0 },
+  { question: "『四』の意味はどれですか？", options: ["Empat", "Tiga", "Dua", "Satu"], answer: 0 },
+  { question: "『五』の意味はどれですか？", options: ["Lima", "Enam", "Tujuh", "Delapan"], answer: 0 },
+  { question: "『六』の意味はどれですか？", options: ["Enam", "Lima", "Tujuh", "Delapan"], answer: 0 },
+  { question: "『七』の意味はどれですか？", options: ["Enam", "Tujuh", "Lima", "Delapan"], answer: 1 },
+  { question: "『八』の意味はどれですか？", options: ["Tujuh", "Delapan", "Lima", "Enam"], answer: 1 },
+  { question: "『九』の意味はどれですか？", options: ["Delapan", "Sembilan", "Sepuluh", "Lima"], answer: 1 },
+  { question: "『十』の意味はどれですか？", options: ["Satu", "Sepuluh", "Lima", "Dua"], answer: 1 },
+  { question: "『～年』の意味はどれですか？", options: ["Bulan", "Hari", "Tahun", "Jam"], answer: 2 },
+  { question: "『～月』の意味はどれですか？", options: ["Tahun", "Hari", "Jam", "Bulan"], answer: 3 },
+  { question: "『～日』の意味はどれですか？", options: ["Hari", "Tahun", "Bulan", "Jam"], answer: 0 },
+  { question: "『東』の意味はどれですか？", options: ["Barat", "Timur", "Utara", "Selatan"], answer: 1 },
+  { question: "『西』の意味はどれですか？", options: ["Timur", "Barat", "Utara", "Selatan"], answer: 1 },
+  { question: "『南』の意味はどれですか？", options: ["Selatan", "Utara", "Barat", "Timur"], answer: 0 },
+  { question: "『北』の意味はどれですか？", options: ["Utara", "Selatan", "Barat", "Timur"], answer: 0 },
+  { question: "『～口』の意味はどれですか？", options: ["Mulut", "Pintu", "Telinga", "Mata"], answer: 1 },
+  { question: "『東口』の意味はどれですか？", options: ["Pintu Barat", "Pintu Timur", "Pintu Utara", "Pintu Selatan"], answer: 1 },
+  { question: "『西口』の意味はどれですか？", options: ["Pintu Timur", "Pintu Barat", "Pintu Utara", "Pintu Selatan"], answer: 1 },
+  { question: "『南口』の意味はどれですか？", options: ["Pintu Utara", "Pintu Selatan", "Pintu Timur", "Pintu Barat"], answer: 1 },
+  { question: "『北口』の意味はどれですか？", options: ["Pintu Utara", "Pintu Selatan", "Pintu Timur", "Pintu Barat"], answer: 0 },
+  { question: "『買います』の意味はどれですか？", options: ["Menjual", "Membeli", "Melihat", "Mendengar"], answer: 1 },
+  { question: "『買い物』の意味はどれですか？", options: ["Berbelanja", "Membeli", "Menjual", "Menabung"], answer: 0 },
+  { question: "『お金』の意味はどれですか？", options: ["Uang", "Makanan", "Pakaian", "Tempat"], answer: 0 },
+  { question: "『～円』の意味はどれですか？", options: ["Yen (mata uang)", "Dolar", "Rupiah", "Won"], answer: 0 },
+  { question: "『百』の意味はどれですか？", options: ["Seribu", "Seratus", "Sepuluh", "Sepuluh Ribu"], answer: 1 },
+  { question: "『千』の意味はどれですか？", options: ["Seribu", "Seratus", "Sepuluh", "Sepuluh Ribu"], answer: 0 },
+{ question: "『千円』の意味はどれですか？", options: ["Seribu Yen", "Sepuluh Ribu Yen", "Seratus Yen", "Lima Ribu Yen"], answer: 0 },
+{ question: "『一万円』の意味はどれですか？", options: ["Seribu Yen", "Sepuluh Ribu Yen", "Lima Ribu Yen", "Lima Puluh Ribu Yen"], answer: 1 },
+{ question: "『行きます』の意味はどれですか？", options: ["Pergi", "Datang", "Kembali", "Berjalan"], answer: 0 },
+{ question: "『来ます』の意味はどれですか？", options: ["Pergi", "Datang", "Pulang", "Masuk"], answer: 1 },
+{ question: "『会います』の意味はどれですか？", options: ["Bertemu", "Berjalan", "Membeli", "Membaca"], answer: 0 },
+{ question: "『休みます』の意味はどれですか？", options: ["Bekerja", "Belajar", "Istirahat", "Berjalan"], answer: 2 },
+{ question: "『日本』の意味はどれですか？", options: ["Cina", "Korea", "Jepang", "Thailand"], answer: 2 },
+{ question: "『東京』の意味はどれですか？", options: ["Kyoto", "Osaka", "Sapporo", "Tokyo"], answer: 3 },
+{ question: "『私』の意味はどれですか？", options: ["Dia", "Saya", "Kamu", "Mereka"], answer: 1 },
+{ question: "『父』の意味はどれですか？", options: ["Ibu", "Ayah", "Anak", "Kakek"], answer: 1 },
+{ question: "『母』の意味はどれですか？", options: ["Ibu", "Ayah", "Anak", "Nenek"], answer: 0 },
+{ question: "『子供』の意味はどれですか？", options: ["Anak", "Orang Tua", "Saudara", "Kakek"], answer: 0 },
+{ question: "『男』の意味はどれですか？", options: ["Perempuan", "Laki-laki", "Anak-anak", "Orang tua"], answer: 1 },
+{ question: "『女』の意味はどれですか？", options: ["Laki-laki", "Perempuan", "Anak", "Ibu"], answer: 1 },
+{ question: "『人』の意味はどれですか？", options: ["Hewan", "Tumbuhan", "Orang", "Barang"], answer: 2 },
+{ question: "『お父さん』の意味はどれですか？", options: ["Ibu", "Ayah", "Saudara", "Kakek"], answer: 1 },
+{ question: "『お母さん』の意味はどれですか？", options: ["Ibu", "Ayah", "Saudara", "Nenek"], answer: 0 },
+{ question: "『何人』の意味はどれですか？", options: ["Berapa Orang", "Orang Jepang", "Orang Luar Negeri", "Orang Tua"], answer: 0 },
+{ question: "『国』の意味はどれですか？", options: ["Kota", "Negara", "Desa", "Wilayah"], answer: 1 },
+{ question: "『外国』の意味はどれですか？", options: ["Negeri Sendiri", "Dalam Negeri", "Luar Negeri", "Kota Besar"], answer: 2 },
+{ question: "『千円』の意味はどれですか？", options: ["Seribu Yen", "Sepuluh Ribu Yen", "Seratus Yen", "Lima Ribu Yen"], answer: 0 },
+{ question: "『一万円』の意味はどれですか？", options: ["Seribu Yen", "Sepuluh Ribu Yen", "Lima Ribu Yen", "Lima Puluh Ribu Yen"], answer: 1 },
+{ question: "『行きます』の意味はどれですか？", options: ["Pergi", "Datang", "Kembali", "Berjalan"], answer: 0 },
+{ question: "『来ます』の意味はどれですか？", options: ["Pergi", "Datang", "Pulang", "Masuk"], answer: 1 },
+{ question: "『会います』の意味はどれですか？", options: ["Bertemu", "Berjalan", "Membeli", "Membaca"], answer: 0 },
+{ question: "『休みます』の意味はどれですか？", options: ["Bekerja", "Belajar", "Istirahat", "Berjalan"], answer: 2 },
+{ question: "『日本』の意味はどれですか？", options: ["Cina", "Korea", "Jepang", "Thailand"], answer: 2 },
+{ question: "『東京』の意味はどれですか？", options: ["Kyoto", "Osaka", "Sapporo", "Tokyo"], answer: 3 },
+{ question: "『私』の意味はどれですか？", options: ["Dia", "Saya", "Kamu", "Mereka"], answer: 1 },
+{ question: "『父』の意味はどれですか？", options: ["Ibu", "Ayah", "Anak", "Kakek"], answer: 1 },
+{ question: "『母』の意味はどれですか？", options: ["Ibu", "Ayah", "Anak", "Nenek"], answer: 0 },
+{ question: "『子供』の意味はどれですか？", options: ["Anak", "Orang Tua", "Saudara", "Kakek"], answer: 0 },
+{ question: "『男』の意味はどれですか？", options: ["Perempuan", "Laki-laki", "Anak-anak", "Orang tua"], answer: 1 },
+{ question: "『女』の意味はどれですか？", options: ["Laki-laki", "Perempuan", "Anak", "Ibu"], answer: 1 },
+{ question: "『人』の意味はどれですか？", options: ["Hewan", "Tumbuhan", "Orang", "Barang"], answer: 2 },
+{ question: "『お父さん』の意味はどれですか？", options: ["Ibu", "Ayah", "Saudara", "Kakek"], answer: 1 },
+{ question: "『お母さん』の意味はどれですか？", options: ["Ibu", "Ayah", "Saudara", "Nenek"], answer: 0 },
+{ question: "『何人』の意味はどれですか？", options: ["Berapa Orang", "Orang Jepang", "Orang Luar Negeri", "Orang Tua"], answer: 0 },
+{ question: "『国』の意味はどれですか？", options: ["Kota", "Negara", "Desa", "Wilayah"], answer: 1 },
+{ question: "『外国』の意味はどれですか？", options: ["Negeri Sendiri", "Dalam Negeri", "Luar Negeri", "Kota Besar"], answer: 2 },
+  { question: "『～語』の意味はどれですか？", options: ["Orang", "Bahasa", "Kota", "Negara"], answer: 1 },
+  { question: "『日本語』の意味はどれですか？", options: ["Bahasa Inggris", "Bahasa Cina", "Bahasa Jepang", "Bahasa Korea"], answer: 2 },
+  { question: "『英語』の意味はどれですか？", options: ["Bahasa Jepang", "Bahasa Inggris", "Bahasa Cina", "Bahasa Korea"], answer: 1 },
+  { question: "『中国語』の意味はどれですか？", options: ["Bahasa Korea", "Bahasa Inggris", "Bahasa Jepang", "Bahasa Cina"], answer: 3 },
+  { question: "『～人』の意味はどれですか？", options: ["Bahasa", "Orang", "Kota", "Negara"], answer: 1 },
+  { question: "『日本人』の意味はどれですか？", options: ["Orang Amerika", "Orang Cina", "Orang Jepang", "Orang Korea"], answer: 2 },
+  { question: "『好き』の意味はどれですか？", options: ["Suka", "Marah", "Sedih", "Benci"], answer: 0 },
+  { question: "『本』の意味はどれですか？", options: ["Majalah", "Buku", "Surat", "Kertas"], answer: 1 },
+  { question: "『読書』の意味はどれですか？", options: ["Berbicara", "Mendengarkan", "Membaca buku", "Menulis surat"], answer: 2 },
+  { question: "『何』の意味はどれですか？", options: ["Siapa", "Di mana", "Kapan", "Apa"], answer: 3 },
+  { question: "『春』の意味はどれですか？", options: ["Musim panas", "Musim semi", "Musim dingin", "Musim gugur"], answer: 1 },
+  { question: "『夏』の意味はどれですか？", options: ["Musim gugur", "Musim dingin", "Musim panas", "Musim semi"], answer: 2 },
+  { question: "『秋』の意味はどれですか？", options: ["Musim semi", "Musim gugur", "Musim panas", "Musim dingin"], answer: 1 },
+  { question: "『冬』の意味はどれですか？", options: ["Musim gugur", "Musim dingin", "Musim panas", "Musim semi"], answer: 1 },
+  { question: "『今』の意味はどれですか？", options: ["Kemarin", "Sekarang", "Besok", "Nanti"], answer: 1 },
+  { question: "『花』の意味はどれですか？", options: ["Daun", "Pohon", "Bunga", "Rumput"], answer: 2 },
+  { question: "『海』の意味はどれですか？", options: ["Laut", "Gunung", "Sungai", "Danau"], answer: 0 },
+  { question: "『山』の意味はどれですか？", options: ["Gunung", "Laut", "Danau", "Sungai"], answer: 0 },
+  { question: "『川』の意味はどれですか？", options: ["Sungai", "Laut", "Gunung", "Danau"], answer: 0 },
+  { question: "『今日』の意味はどれですか？", options: ["Hari ini", "Besok", "Kemarin", "Lusa"], answer: 0 },
+  { question: "『天気』の意味はどれですか？", options: ["Cuaca", "Musim", "Hari", "Bulan"], answer: 0 },
+  { question: "『晴れ』の意味はどれですか？", options: ["Mendung", "Berkabut", "Cerah", "Hujan"], answer: 2 },
+  { question: "『雨』の意味はどれですか？", options: ["Angin", "Salju", "Hujan", "Awan"], answer: 2 },
+  { question: "『雪』の意味はどれですか？", options: ["Salju", "Angin", "Hujan", "Awan"], answer: 0 },
+  { question: "『雲』の意味はどれですか？", options: ["Awan", "Hujan", "Salju", "Angin"], answer: 0 },
+  { question: "『風』の意味はどれですか？", options: ["Salju", "Angin", "Awan", "Hujan"], answer: 1 },
+  { question: "『空』の意味はどれですか？", options: ["Langit", "Gunung", "Sungai", "Laut"], answer: 0 },
+  { question: "『町』の意味はどれですか？", options: ["Desa", "Gunung", "Kota kecil", "Sungai"], answer: 2 },
+  { question: "『店』の意味はどれですか？", options: ["Sekolah", "Kantor", "Restoran", "Toko"], answer: 3 },
+  { question: "『人気』の意味はどれですか？", options: ["Kuat", "Lemah", "Populer", "Murah"], answer: 2 },
+  { question: "『多い』の意味はどれですか？", options: ["Panas", "Banyak", "Dingin", "Sedikit"], answer: 1 },
+  { question: "『少ない』の意味はどれですか？", options: ["Banyak", "Sedikit", "Keras", "Lunak"], answer: 1 },
+  { question: "『高い』の意味はどれですか？", options: ["Panjang", "Rendah/Murah", "Tinggi/Mahal", "Pendek"], answer: 2 },
+  { question: "『安い』の意味はどれですか？", options: ["Mahal", "Murah", "Tinggi", "Rendah"], answer: 1 },
+  { question: "『広い』の意味はどれですか？", options: ["Kecil", "Besar", "Sempit", "Luas"], answer: 3 },
+  { question: "『道』の意味はどれですか？", options: ["Rumah", "Sekolah", "Toko", "Jalan"], answer: 3 },
+  { question: "『通り』の意味はどれですか？", options: ["Tempat", "Orang", "Jalan", "Benda"], answer: 2 },
+  { question: "『右』の意味はどれですか？", options: ["Kanan", "Depan", "Belakang", "Kiri"], answer: 0 },
+  { question: "『左』の意味はどれですか？", options: ["Depan", "Kiri", "Kanan", "Belakang"], answer: 1 },
+  { question: "『一つ』の意味はどれですか？", options: ["Empat", "Tiga", "Dua", "Satu (benda)"], answer: 3 },
+  { question: "『二つ』の意味はどれですか？", options: ["Satu", "Tiga", "Dua (benda)", "Empat"], answer: 2 },
+  { question: "『赤い』の意味はどれですか？", options: ["Merah", "Hitam", "Biru", "Putih"], answer: 0 },
+  { question: "『青い』の意味はどれですか？", options: ["Biru", "Merah", "Hitam", "Putih"], answer: 0 },
+  { question: "『黒い』の意味はどれですか？", options: ["Hitam", "Putih", "Merah", "Biru"], answer: 0 },
+  { question: "『白い』の意味はどれですか？", options: ["Putih", "Hitam", "Merah", "Biru"], answer: 0 },
+  { question: "『時間』の意味はどれですか？", options: ["Orang", "Waktu", "Tempat", "Benda"], answer: 1 },
+  { question: "『場所』の意味はどれですか？", options: ["Tempat", "Waktu", "Orang", "Benda"], answer: 0 },
+  { question: "『駅』の意味はどれですか？", options: ["Sekolah", "Kantor", "Stasiun", "Toko"], answer: 2 },
+  { question: "『日』の意味はどれですか？", options: ["Hari/Matahari", "Bulan", "Tahun", "Jam"], answer: 0 },
+  { question: "『出かけます』の意味はどれですか？", options: ["Berjalan", "Datang", "Makan", "Pergi keluar"], answer: 3 },
+  { question: "『待ちます』の意味はどれですか？", options: ["Berjalan", "Menunggu", "Pergi", "Makan"], answer: 1 },
+  { question: "『止まります』の意味はどれですか？", options: ["Berjalan", "Makan", "Berhenti", "Berlari"], answer: 2 },
+  { question: "『食事』の意味はどれですか？", options: ["Minum", "Berjalan", "Makan", "Tidur"], answer: 2 },
+  { question: "『仕事』の意味はどれですか？", options: ["Libur", "Sekolah", "Pekerjaan", "Toko"], answer: 2 },
+  { question: "『前』の意味はどれですか？", options: ["Belakang", "Depan", "Kanan", "Kiri"], answer: 1 },
+  { question: "『後』の意味はどれですか？", options: ["Depan", "Belakang", "Kanan", "Kiri"], answer: 1 },
+  { question: "『朝』の意味はどれですか？", options: ["Pagi", "Malam", "Siang", "Sore"], answer: 0 },
+  { question: "『昼』の意味はどれですか？", options: ["Malam", "Siang", "Pagi", "Sore"], answer: 1 },
+  { question: "『夜』の意味はどれですか？", options: ["Sore", "Pagi", "Siang", "Malam"], answer: 3 },
+  { question: "『乗ります』の意味はどれですか？", options: ["Turun", "Berjalan", "Naik (kendaraan)", "Berhenti"], answer: 2 },
+  { question: "『学校』の意味はどれですか？", options: ["Toko", "Rumah", "Sekolah", "Kantor"], answer: 2 },
+  { question: "『小学校』の意味はどれですか？", options: ["Sekolah Tinggi", "Sekolah Dasar", "Sekolah Menengah", "Perguruan Tinggi"], answer: 1 },
+  { question: "『中学校』の意味はどれですか？", options: ["Sekolah Tinggi", "Sekolah Menengah Pertama", "Perguruan Tinggi", "Sekolah Dasar"], answer: 1 },
+  { question: "『高校』の意味はどれですか？", options: ["Sekolah Menengah Atas", "Sekolah Dasar", "Perguruan Tinggi", "Sekolah Menengah Pertama"], answer: 0 },
+  { question: "『大学』の意味はどれですか？", options: ["Sekolah Dasar", "Sekolah Menengah", "Toko", "Perguruan Tinggi"], answer: 3 },
+  { question: "『先生』の意味はどれですか？", options: ["Guru", "Dokter", "Teman", "Murid"], answer: 0 },
+  { question: "『学生』の意味はどれですか？", options: ["Pengacara", "Guru", "Murid", "Dokter"], answer: 2 },
+  { question: "『勉強』の意味はどれですか？", options: ["Bekerja", "Bermain", "Belajar", "Tidur"], answer: 2 },
+  { question: "『文化』の意味はどれですか？", options: ["Olahraga", "Bahasa", "Budaya", "Makanan"], answer: 2 },
+  { question: "『音楽』の意味はどれですか？", options: ["Film", "Makanan", "Musik", "Buku"], answer: 2 },
+  { question: "『旅行』の意味はどれですか？", options: ["Belanja", "Perjalanan", "Belajar", "Makan"], answer: 1 },
+  { question: "『留学』の意味はどれですか？", options: ["Bekerja di luar negeri", "Studi ke luar negeri", "Liburan", "Belajar di rumah"], answer: 1 },
+  { question: "『友達』の意味はどれですか？", options: ["Saudara", "Tetangga", "Teman", "Guru"], answer: 2 },
+  { question: "『楽しい』の意味はどれですか？", options: ["Sedih", "Menyenangkan", "Marah", "Membosankan"], answer: 1 },
+  { question: "『週』の意味はどれですか？", options: ["Bulan", "Tahun", "Minggu", "Hari"], answer: 2 },
+  { question: "『食べ物』の意味はどれですか？", options: ["Baju", "Tempat", "Makanan", "Minuman"], answer: 2 },
+  { question: "『飲物』の意味はどれですか？", options: ["Makanan", "Minuman", "Tempat", "Baju"], answer: 1 },
+  { question: "『お茶』の意味はどれですか？", options: ["Kopi", "Air", "Teh", "Susu"], answer: 2 },
+  { question: "『お酒』の意味はどれですか？", options: ["Teh", "Minuman beralkohol", "Kopi", "Susu"], answer: 1 },
+  { question: "『作ります』の意味はどれですか？", options: ["Memakai", "Menjual", "Membuat", "Membeli"], answer: 2 },
+  { question: "『持っていきます』の意味はどれですか？", options: ["Membawa", "Memakai", "Mengambil", "Memberi"], answer: 0 },
+  { question: "『お願いします』の意味はどれですか？", options: ["Terima kasih", "Maaf", "Tolong", "Selamat"], answer: 2 },
+  { question: "『料理』の意味はどれですか？", options: ["Minuman", "Masakan", "Makanan", "Alat makan"], answer: 1 },
+  { question: "『味』の意味はどれですか？", options: ["Rasa", "Warna", "Ukuran", "Bau"], answer: 0 },
+  { question: "『色』の意味はどれですか？", options: ["Rasa", "Bau", "Ukuran", "Warna"], answer: 3 },
+  { question: "『野菜』の意味はどれですか？", options: ["Buah", "Sayur", "Daging", "Minuman"], answer: 1 },
+  { question: "『少し』の意味はどれですか？", options: ["Panas", "Sedikit", "Banyak", "Dingin"], answer: 1 },
+  { question: "『中』の意味はどれですか？", options: ["Atas", "Tengah", "Bawah", "Luar"], answer: 1 },
+  { question: "『入っています』の意味はどれですか？", options: ["Di dalam", "Keluar", "Masuk", "Di luar"], answer: 0 },
+  { question: "『会社』の意味はどれですか？", options: ["Rumah", "Perusahaan", "Sekolah", "Toko"], answer: 1 },
+  { question: "『本社』の意味はどれですか？", options: ["Kantor pusat", "Cabang", "Sekolah", "Toko"], answer: 0 },
+  { question: "『支社』の意味はどれですか？", options: ["Toko", "Cabang", "Kantor pusat", "Sekolah"], answer: 1 },
+  { question: "『出張』の意味はどれですか？", options: ["Perjalanan pribadi", "Perjalanan dinas", "Liburan", "Bekerja"], answer: 1 },
+  { question: "『空港』の意味はどれですか？", options: ["Bandara", "Stasiun", "Pelabuhan", "Terminal bus"], answer: 0 },
+  { question: "『出発』の意味はどれですか？", options: ["Keberangkatan", "Kedatangan", "Pulang", "Perjalanan"], answer: 0 },
+  { question: "『到着』の意味はどれですか？", options: ["Kedatangan", "Keberangkatan", "Perjalanan", "Pulang"], answer: 0 },
+  { question: "『午前』の意味はどれですか？", options: ["Pagi", "Sore", "Siang", "Malam"], answer: 0 },
+  { question: "『午後』の意味はどれですか？", options: ["Malam", "Siang", "Sore", "Pagi"], answer: 2 },
+  { question: "『自分』の意味はどれですか？", options: ["Teman", "Diri sendiri", "Orang lain", "Keluarga"], answer: 1 },
+  { question: "『電話』の意味はどれですか？", options: ["Email", "Surat", "SMS", "Telepon"], answer: 3 },
+  { question: "『電気』の意味はどれですか？", options: ["Listrik", "Mobil", "Kereta", "Radio"], answer: 0 },
+  { question: "『電車』の意味はどれですか？", options: ["Pesawat", "Kereta listrik", "Mobil", "Sepeda"], answer: 1 },
+  { question: "『車』の意味はどれですか？", options: ["Kereta", "Mobil", "Kapal", "Motor"], answer: 1 },
+  { question: "『送ります』の意味はどれですか？", options: ["Mengirim", "Memakai", "Membeli", "Mendengar"], answer: 0 },
+  { question: "『使います』の意味はどれですか？", options: ["Membawa", "Menggunakan", "Menjual", "Membuka"], answer: 1 },
+  { question: "『借ります』の意味はどれですか？", options: ["Menyewa", "Membeli", "Meminjam", "Membayar"], answer: 2 },
+  { question: "『体』の意味はどれですか？", options: ["Badan", "Tangan", "Kaki", "Mata"], answer: 0 },
+  { question: "『頭』の意味はどれですか？", options: ["Telinga", "Kepala", "Mulut", "Kaki"], answer: 1 },
+  { question: "『目』の意味はどれですか？", options: ["Telinga", "Mata", "Mulut", "Tangan"], answer: 1 },
+  { question: "『耳』の意味はどれですか？", options: ["Hidung", "Telinga", "Mata", "Kaki"], answer: 1 },
+  { question: "『手』の意味はどれですか？", options: ["Tangan", "Kaki", "Badan", "Kepala"], answer: 0 },
+  { question: "『足』の意味はどれですか？", options: ["Kepala", "Tangan", "Kaki", "Mata"], answer: 2 },
+  { question: "『上』の意味はどれですか？", options: ["Bawah", "Atas", "Depan", "Belakang"], answer: 1 },
+  { question: "『下』の意味はどれですか？", options: ["Atas", "Bawah", "Depan", "Belakang"], answer: 1 },
+  { question: "『毎朝』の意味はどれですか？", options: ["Setiap pagi", "Setiap malam", "Setiap siang", "Setiap hari"], answer: 0 },
+  { question: "『毎日』の意味はどれですか？", options: ["Setiap malam", "Setiap siang", "Setiap hari", "Setiap minggu"], answer: 2 },
+  { question: "『週末』の意味はどれですか？", options: ["Akhir pekan", "Akhir bulan", "Akhir tahun", "Tengah minggu"], answer: 0 },
+  { question: "『元気』の意味はどれですか？", options: ["Sehat", "Lelah", "Sakit", "Sedih"], answer: 0 },
+  { question: "『外』の意味はどれですか？", options: ["Dalam", "Atas", "Luar", "Bawah"], answer: 2 },
+  { question: "『起きます』の意味はどれですか？", options: ["Tidur", "Bangun", "Berjalan", "Berlari"], answer: 1 },
+  { question: "『歩きます』の意味はどれですか？", options: ["Berlari", "Berenang", "Berjalan", "Melompat"], answer: 2 },
+  { question: "『走ります』の意味はどれですか？", options: ["Melompat", "Berlari", "Berjalan", "Berenang"], answer: 1 },
+  { question: "『泳ぎます』の意味はどれですか？", options: ["Berenang", "Berlari", "Berjalan", "Melompat"], answer: 0 },
+  { question: "『お祝い』の意味はどれですか？", options: ["Ucapan", "Perayaan", "Kebiasaan", "Kebutuhan"], answer: 1 },
+  { question: "『誕生日』の意味はどれですか？", options: ["Hari kemerdekaan", "Hari pernikahan", "Hari ulang tahun", "Hari libur"], answer: 2 },
+  { question: "『結婚』の意味はどれですか？", options: ["Pernikahan", "Ulang tahun", "Perpisahan", "Pertemuan"], answer: 0 },
+  { question: "『絵』の意味はどれですか？", options: ["Lukisan", "Foto", "Poster", "Majalah"], answer: 0 },
+  { question: "『写真』の意味はどれですか？", options: ["Majalah", "Foto", "Lukisan", "Koran"], answer: 1 },
+  { question: "『時計』の意味はどれですか？", options: ["Cermin", "Kalender", "Jam", "Peta"], answer: 2 },
+  { question: "『着ます』の意味はどれですか？", options: ["Memakai (pakaian)", "Membuka", "Membeli", "Mencuci"], answer: 0 },
+  { question: "『先週』の意味はどれですか？", options: ["Minggu lalu", "Bulan lalu", "Tahun lalu", "Minggu depan"], answer: 0 },
+  { question: "『今月』の意味はどれですか？", options: ["Bulan ini", "Bulan lalu", "Minggu ini", "Tahun ini"], answer: 0 },
+  { question: "『来年』の意味はどれですか？", options: ["Tahun ini", "Tahun depan", "Tahun lalu", "Minggu depan"], answer: 1 },
+  { question: "『今年』の意味はどれですか？", options: ["Tahun depan", "Tahun ini", "Tahun lalu", "Minggu ini"], answer: 1 },
+  { question: "『去年』の意味はどれですか？", options: ["Tahun ini", "Tahun depan", "Tahun lalu", "Minggu lalu"], answer: 2 },
+  { question: "『家』の意味はどれですか？", options: ["Kantor", "Rumah", "Sekolah", "Hotel"], answer: 1 },
+  { question: "『思います』の意味はどれですか？", options: ["Merasa", "Berpikir", "Mendengar", "Berbicara"], answer: 1 },
+  { question: "『自己紹介』の意味はどれですか？", options: ["Perkenalan diri", "Pelajaran", "Ujian", "Pertanyaan"], answer: 0 },
+  { question: "『名前』の意味はどれですか？", options: ["Nama", "Alamat", "Umur", "Jenis kelamin"], answer: 0 },
+  { question: "『意味』の意味はどれですか？", options: ["Penjelasan", "Makna", "Kalimat", "Perintah"], answer: 1 },
+  { question: "『本屋』の意味はどれですか？", options: ["Toko roti", "Toko buku", "Toko pakaian", "Toko sepatu"], answer: 1 },
+  { question: "『近く』の意味はどれですか？", options: ["Jauh", "Dekat", "Tinggi", "Luas"], answer: 1 },
+  { question: "『住みます』の意味はどれですか？", options: ["Bekerja", "Tinggal", "Belajar", "Berjalan"], answer: 1 },
+  { question: "『働きます』の意味はどれですか？", options: ["Belajar", "Bekerja", "Tidur", "Bangun"], answer: 1 },
+  { question: "『兄』の意味はどれですか？", options: ["Adik laki-laki", "Kakak laki-laki", "Kakak perempuan", "Adik perempuan"], answer: 1 },
+  { question: "『お姉さん』の意味はどれですか？", options: ["Adik perempuan", "Kakak perempuan", "Ibu", "Nenek"], answer: 1 },
+  { question: "『弟』の意味はどれですか？", options: ["Adik laki-laki", "Kakak laki-laki", "Adik perempuan", "Kakak perempuan"], answer: 0 },
+  { question: "『妹』の意味はどれですか？", options: ["Kakak perempuan", "Adik perempuan", "Kakak laki-laki", "Adik laki-laki"], answer: 1 },
+  { question: "『家族』の意味はどれですか？", options: ["Teman", "Keluarga", "Guru", "Tetangga"], answer: 1 },
+  { question: "『長い』の意味はどれですか？", options: ["Pendek", "Lama", "Tinggi", "Panjang"], answer: 3 },
+  { question: "『短い』の意味はどれですか？", options: ["Panjang", "Lama", "Rendah", "Pendek"], answer: 3 },
+  { question: "『低い』の意味はどれですか？", options: ["Tinggi", "Panjang", "Pendek", "Rendah"], answer: 3 },
+  { question: "『上手』の意味はどれですか？", options: ["Kalah", "Kasar", "Buruk", "Mahir"], answer: 3 },
+  { question: "『歌』の意味はどれですか？", options: ["Alat musik", "Melodi", "Tari", "Lagu"], answer: 3 },
+  { question: "『歌います』の意味はどれですか？", options: ["Menari", "Mendengarkan", "Bermain musik", "Menyanyi"], answer: 3 },
+  { question: "『客』の意味はどれですか？", options: ["Penjual", "Pelayan", "Kasir", "Tamu"], answer: 3 },
+  { question: "『注文』の意味はどれですか？", options: ["Bayaran", "Masakan", "Kasir", "Pesanan"], answer: 3 },
+  { question: "『洋食』の意味はどれですか？", options: ["Makanan Jepang", "Minuman", "Camilan", "Makanan Barat"], answer: 3 },
+  { question: "『和食』の意味はどれですか？", options: ["Makanan Barat", "Minuman", "Camilan", "Makanan Jepang"], answer: 3 },
+  { question: "『牛肉』の意味はどれですか？", options: ["Daging ayam", "Ikan", "Sayuran", "Daging sapi"], answer: 3 },
+  { question: "『地方』の意味はどれですか？", options: ["Ibu kota", "Negara", "Provinsi", "Daerah"], answer: 3 },
+  { question: "『有名』の意味はどれですか？", options: ["Biasa", "Misterius", "Tidak dikenal", "Terkenal"], answer: 3 },
+  { question: "『生』の意味はどれですか？", options: ["Mati", "Bekas", "Bekas", "Segar / Mentah"], answer: 3 },
+  { question: "『冷たい』の意味はどれですか？", options: ["Panas", "Hangat", "Kering", "Dingin"], answer: 3 },
+  { question: "『全部』の意味はどれですか？", options: ["Sebagian", "Sedikit", "Banyak", "Semua"], answer: 3 },
+  { question: "『食べ方』の意味はどれですか？", options: ["Cara memasak", "Cara minum", "Cara duduk", "Cara makan"], answer: 3 },
+  { question: "『熱い』の意味はどれですか？", options: ["Dingin", "Keras", "Ringan", "Panas"], answer: 3 },
+  { question: "『苦手』の意味はどれですか？", options: ["Mahir", "Kuat", "Suka", "Tidak suka / Lemah"], answer: 3 },
+  { question: "『入れます』の意味はどれですか？", options: ["Mengambil", "Menghapus", "Membuang", "Memasukkan"], answer: 3 },
+  { question: "『木』の意味はどれですか？", options: ["Batu", "Air", "Tanah", "Pohon"], answer: 3 },
+  { question: "『森』の意味はどれですか？", options: ["Gunung", "Sawah", "Danau", "Hutan"], answer: 3 },
+  { question: "『島』の意味はどれですか？", options: ["Gunung", "Danau", "Kota", "Pulau"], answer: 3 },
+  { question: "『自然』の意味はどれですか？", options: ["Bangunan", "Mobil", "Kota", "Alam"], answer: 3 },
+  { question: "『船』の意味はどれですか？", options: ["Mobil", "Pesawat", "Kereta", "Kapal"], answer: 3 },
+  { question: "『暑い』の意味はどれですか？", options: ["Dingin", "Hangat", "Kering", "Panas"], answer: 3 },
+  { question: "『帰ります』の意味はどれですか？", options: ["Pergi", "Datang", "Menginap", "Pulang"], answer: 3 },
+  { question: "『予約します』の意味はどれですか？", options: ["Membeli", "Membatalkan", "Membawa", "Memesan"], answer: 3 },
+  { question: "『運転します』の意味はどれですか？", options: ["Membeli", "Berjalan", "Mengendarai", "Menyetir"], answer: 3 },
+  { question: "『旅行中』の意味はどれですか？", options: ["Di rumah", "Di kantor", "Di sekolah", "Sedang bepergian"], answer: 3 },
+  { question: "『観光地』の意味はどれですか？", options: ["Kantor", "Pabrik", "Rumah", "Tempat wisata"], answer: 3 },
+  { question: "『女性』の意味はどれですか？", options: ["Laki-laki", "Anak-anak", "Lansia", "Perempuan"], answer: 3 },
+  { question: "『男性』の意味はどれですか？", options: ["Perempuan", "Anak-anak", "Lansia", "Laki-laki"], answer: 3 },
+  { question: "『動物』の意味はどれですか？", options: ["Tumbuhan", "Manusia", "Benda", "Hewan"], answer: 3 },
+  { question: "『空気』の意味はどれですか？", options: ["Air", "Api", "Tanah", "Udara"], answer: 3 },
+  { question: "『料金』の意味はどれですか？", options: ["Gratis", "Murah", "Pajak", "Biaya"], answer: 3 },
+  { question: "『明るい』の意味はどれですか？", options: ["Gelap", "Biru", "Dingin", "Terang"], answer: 3 },
+  { question: "『便利』の意味はどれですか？", options: ["Mahal", "Jauh", "Sulit", "Praktis / Mudah"], answer: 3 },
+  { question: "『一年中』の意味はどれですか？", options: ["Sebulan penuh", "Setengah tahun", "Sebulan sekali", "Sepanjang tahun"], answer: 3 },
+  { question: "『受付』の意味はどれですか？", options: ["Kasir", "Tamu", "Pegawai", "Resepsionis"], answer: 3 },
+  { question: "『広場』の意味はどれですか？", options: ["Jalan", "Gedung", "Taman", "Lapangan"], answer: 3 },
+  { question: "『問題』の意味はどれですか？", options: ["Jawaban", "Latihan", "Materi", "Masalah / Soal"], answer: 3 },
+  { question: "『同じ』の意味はどれですか？", options: ["Berbeda", "Jauh", "Kecil", "Sama"], answer: 3 },
+  { question: "『集まります』の意味はどれですか？", options: ["Membubarkan", "Berpisah", "Mengusir", "Berkumpul"], answer: 3 },
+  { question: "『始まります』の意味はどれですか？", options: ["Berakhir", "Berhenti", "Melanjutkan", "Mulai"], answer: 3 },
+  { question: "『終わります』の意味はどれですか？", options: ["Mulai", "Meningkat", "Berkurang", "Selesai"], answer: 3 },
+  { question: "『中止します』の意味はどれですか？", options: ["Melanjutkan", "Memulai", "Meningkatkan", "Membatalkan"], answer: 3 },
+  { question: "『教えます』の意味はどれですか？", options: ["Belajar", "Bertanya", "Mencari", "Mengajar"], answer: 3 },
+  { question: "『祭り』の意味はどれですか？", options: ["Festival", "Pasar", "Kuil", "Toko"], answer: 0 },
+  { question: "『会場』の意味はどれですか？", options: ["Sekolah", "Lapangan", "Tempat acara", "Gedung"], answer: 2 },
+  { question: "『入場料』の意味はどれですか？", options: ["Biaya parkir", "Biaya masuk", "Biaya makan", "Tiket pulang"], answer: 1 },
+  { question: "『参加者』の意味はどれですか？", options: ["Penonton", "Peserta", "Penjual", "Petugas"], answer: 1 },
+  { question: "『急ぎます』の意味はどれですか？", options: ["Lambat", "Santai", "Cepat", "Berjalan"], answer: 2 },
+  { question: "『決めます』の意味はどれですか？", options: ["Membatalkan", "Memilih", "Menghapus", "Memutuskan"], answer: 3 },
+  { question: "『知ります』の意味はどれですか？", options: ["Mencari", "Menemukan", "Melihat", "Mengetahui"], answer: 3 },
+  { question: "『正月』の意味はどれですか？", options: ["Tahun baru", "Tahun lalu", "Hari kemerdekaan", "Hari libur"], answer: 0 },
+  { question: "『年末』の意味はどれですか？", options: ["Awal tahun", "Akhir tahun", "Tengah tahun", "Bulan depan"], answer: 1 },
+  { question: "『年始』の意味はどれですか？", options: ["Awal tahun", "Akhir tahun", "Tengah tahun", "Bulan lalu"], answer: 0 },
+  { question: "『親』の意味はどれですか？", options: ["Anak", "Teman", "Orang tua", "Guru"], answer: 2 },
+  { question: "『忙しい』の意味はどれですか？", options: ["Sibuk", "Santai", "Kosong", "Mudah"], answer: 0 },
+  { question: "『特別』の意味はどれですか？", options: ["Biasa", "Khusus", "Murah", "Besar"], answer: 1 },
+  { question: "『帰国』の意味はどれですか？", options: ["Keluar negeri", "Pergi", "Balik ke negara asal", "Pindah rumah"], answer: 2 },
+  { question: "『喜びます』の意味はどれですか？", options: ["Sedih", "Marah", "Gembira", "Lelah"], answer: 2 },
+  { question: "『幸せ』の意味はどれですか？", options: ["Bahagia", "Miskin", "Lapar", "Marah"], answer: 0 },
+  { question: "『成長』の意味はどれですか？", options: ["Belajar", "Bermain", "Berkembang", "Menari"], answer: 2 },
+  { question: "『長生き』の意味はどれですか？", options: ["Umur panjang", "Cepat mati", "Sakit", "Lahir kembali"], answer: 0 },
+  { question: "『願い事』の意味はどれですか？", options: ["Ucapan", "Mimpi buruk", "Keinginan", "Pengumuman"], answer: 2 },
+  { question: "『合格』の意味はどれですか？", options: ["Gagal", "Lulus", "Tidak ikut", "Mundur"], answer: 1 },
+  { question: "『試験』の意味はどれですか？", options: ["Pelajaran", "Ujian", "Latihan", "Jadwal"], answer: 1 },
+  { question: "『大人』の意味はどれですか？", options: ["Anak-anak", "Remaja", "Orang dewasa", "Lansia"], answer: 2 },
+  { question: "『成人式』の意味はどれですか？", options: ["Festival", "Ulang tahun", "Upacara kedewasaan", "Upacara sekolah"], answer: 2 },
+  { question: "『商品』の意味はどれですか？", options: ["Barang dagangan", "Toko", "Harga", "Diskon"], answer: 0 },
+  { question: "『電気製品』の意味はどれですか？", options: ["Produk plastik", "Produk elektronik", "Produk makanan", "Produk kertas"], answer: 1 },
+  { question: "『電子レンジ』の意味はどれですか？", options: ["Kulkas", "Kompor", "Oven listrik", "Mesin cuci"], answer: 2 },
+  { question: "『掃除機』の意味はどれですか？", options: ["Mesin cuci", "Kompor", "Oven", "Vacuum cleaner"], answer: 3 },
+  { question: "『店員』の意味はどれですか？", options: ["Tamu", "Kasir", "Pegawai toko", "Bos"], answer: 2 },
+  { question: "『調子』の意味はどれですか？", options: ["Keadaan", "Alat", "Tempat", "Orang"], answer: 0 },
+  { question: "『悪い』の意味はどれですか？", options: ["Bagus", "Buruk", "Lembut", "Mahal"], answer: 1 },
+  { question: "『動きます』の意味はどれですか？", options: ["Diam", "Berjalan", "Berhenti", "Bergerak"], answer: 3 },
+  { question: "『考えます』の意味はどれですか？", options: ["Berjalan", "Berbicara", "Mendengarkan", "Berpikir"], answer: 3 },
+  { question: "『音』の意味はどれですか？", options: ["Gambar", "Warna", "Bau", "Suara"], answer: 3 },
+  { question: "『出ます』の意味はどれですか？", options: ["Masuk", "Keluar", "Tidur", "Bangun"], answer: 1 },
+  { question: "『機能』の意味はどれですか？", options: ["Bentuk", "Fungsi", "Harga", "Toko"], answer: 1 },
+  { question: "『省エネ』の意味はどれですか？", options: ["Hemat listrik", "Mahal", "Besar", "Cepat"], answer: 0 },
+  { question: "『日本製』の意味はどれですか？", options: ["Buatan Cina", "Buatan Jepang", "Buatan Korea", "Buatan Amerika"], answer: 1 },
+  { question: "『重い』の意味はどれですか？", options: ["Ringan", "Kecil", "Cepat", "Berat"], answer: 3 },
+  { question: "『軽い』の意味はどれですか？", options: ["Berat", "Lambat", "Keras", "Ringan"], answer: 3 },
+  { question: "『静か』の意味はどれですか？", options: ["Bising", "Sunyi", "Ramai", "Panas"], answer: 1 },
+  { question: "『早く』の意味はどれですか？", options: ["Lambat", "Cepat", "Santai", "Banyak"], answer: 1 },
+  { question: "『洗います』の意味はどれですか？", options: ["Menyapu", "Membeli", "Mencuci", "Membuang"], answer: 2 },
+  { question: "『満足します』の意味はどれですか？", options: ["Kecewa", "Senang", "Lapar", "Puas"], answer: 3 },
+  { question: "『京都』の意味はどれですか？", options: ["Kota Osaka", "Kota Kyoto", "Kota Tokyo", "Kota Nagoya"], answer: 1 },
+  { question: "『神社』の意味はどれですか？", options: ["Kuil Shinto", "Kuil Buddha", "Masjid", "Gereja"], answer: 0 },
+  { question: "『お寺』の意味はどれですか？", options: ["Masjid", "Gereja", "Kuil Buddha", "Stupa"], answer: 2 },
+  { question: "『仏教』の意味はどれですか？", options: ["Shinto", "Islam", "Buddha", "Kristen"], answer: 2 },
+  { question: "『歴史』の意味はどれですか？", options: ["Cerita", "Legenda", "Sejarah", "Geografi"], answer: 2 },
+  { question: "『万』の意味はどれですか？", options: ["Sepuluh Ribu", "Seribu", "Seratus", "Sepuluh"], answer: 0 },
+  { question: "『百円』の意味はどれですか？", options: ["100 Yen", "1000 Yen", "10 Yen", "10.000 Yen"], answer: 0 }
+];
+
+
+  // Fungsi untuk mengacak array
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  // Salin array dan acak soal-nya
+  const shuffledQuiz = [...quizData];
+  shuffleArray(shuffledQuiz);
+
+  let currentIndex = 0;
+  let userAnswers = [];
+
+  const quizContainer = document.getElementById('quiz-container');
+  const nextBtn = document.getElementById('next-btn');
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+
+  function showQuestion() {
+    const q = shuffledQuiz[currentIndex];
+    progressText.textContent = `Soal ${currentIndex + 1} dari ${shuffledQuiz.length}`;
+    progressFill.style.width = `${((currentIndex + 1) / shuffledQuiz.length) * 100}%`;
+
+    let html = `
+      <div class="question-number">Soal ${currentIndex + 1}</div>
+      <div class="question">${q.question}</div>
+      <div class="answers">
+    `;
+
+    q.options.forEach((opt, i) => {
+      html += `
+        <input type="radio" name="answer" id="ans${i}" value="${i}">
+        <label for="ans${i}">${opt}</label>
+      `;
+    });
+
+    html += `</div>`;
+    quizContainer.innerHTML = html;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const selected = document.querySelector('input[name="answer"]:checked');
+    if (!selected) {
+      alert('Silakan pilih jawaban terlebih dahulu!');
+      return;
+    }
+    userAnswers[currentIndex] = parseInt(selected.value);
+    currentIndex++;
+    if (currentIndex >= shuffledQuiz.length) {
+      showResult();
+    } else {
+      showQuestion();
+    }
+  });
+
+  function showResult() {
+    let correctCount = 0;
+    let wrongItemsHtml = '';
+    userAnswers.forEach((ans, i) => {
+      if (ans === shuffledQuiz[i].answer) {
+        correctCount++;
+      } else {
+        const q = shuffledQuiz[i];
+        wrongItemsHtml += `
+          <div class="wrong-item">
+            <strong>Soal ${i + 1}:</strong> ${q.question}<br>
+            Jawaban Anda: ${q.options[ans] || '(Tidak menjawab)'}<br>
+            Jawaban Benar: ${q.options[q.answer]}
+          </div>
+        `;
+      }
+    });
+
+    quizContainer.style.display = 'none';
+    nextBtn.style.display = 'none';
+    progressText.style.display = 'none';
+    document.getElementById('progress-bar').style.display = 'none';
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <h2>Hasil Latihan</h2>
+      <p>Skor Anda: <strong>${correctCount} / ${shuffledQuiz.length}</strong></p>
+      ${wrongItemsHtml ? `<h3>Soal yang salah:</h3>${wrongItemsHtml}` : '<p>Selamat! Semua jawaban benar.</p>'}
+      <button onclick="restartQuiz()">Coba Lagi</button>
+    `;
+  }
+
+  function restartQuiz() {
+    currentIndex = 0;
+    userAnswers = [];
+    shuffleArray(shuffledQuiz);
+    quizContainer.style.display = '';
+    nextBtn.style.display = '';
+    progressText.style.display = '';
+    document.getElementById('progress-bar').style.display = '';
+    document.getElementById('result').style.display = 'none';
+    showQuestion();
+  }
+
+  // Mulai quiz
+  showQuestion();
+
+</script>
+</body>
+</html>
